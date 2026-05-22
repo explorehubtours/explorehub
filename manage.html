@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operations Dashboard | Explore Hub Tours</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght=0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    /* ================= LOGIN SECURITY POPUP OVERLAY ================= */
+    .login-lock-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 20, 16, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      padding: 20px;
+      transition: all 0.4s ease;
+    }
+
+    .login-card-popup {
+      max-width: 400px;
+      width: 100%;
+      background: var(--white);
+      padding: 40px 32px;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      text-align: center;
+      border: 1px solid rgba(17, 60, 40, 0.08);
+    }
+
+    .login-badge {
+      width: 64px;
+      height: 64px;
+      background: var(--light-base);
+      color: var(--primary);
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin: 0 auto 20px auto;
+    }
+
+    .login-card-popup h2 {
+      font-family: var(--font-serif);
+      color: var(--primary);
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .login-card-popup p {
+      font-size: 14px;
+      color: rgba(10, 20, 16, 0.6);
+      margin-bottom: 24px;
+    }
+
+    .login-form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .login-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .login-input-group label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+    }
+
+    .login-field-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .login-field-icon i {
+      position: absolute;
+      left: 14px;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .login-field-icon input {
+      width: 100%;
+      padding: 12px 14px 12px 38px;
+      border: 1px solid rgba(17, 60, 40, 0.12);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      background: var(--light-base);
+      outline: none;
+    }
+
+    .login-field-icon input:focus {
+      border-color: var(--primary);
+      background: var(--white);
+    }
+
+    .error-alert-text {
+      color: #df4747;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 4px;
+      display: none;
+      text-align: center;
+    }
+
+    .login-submit-btn {
+      width: 100%;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: var(--transition);
+    }
+
+    /* ================= CORE DASHBOARD VIEW OVERLAYS ================= */
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      border-bottom: 1px solid rgba(17, 60, 40, 0.08);
+      padding-bottom: 20px;
+    }
+
+    .dashboard-title h1 {
+      font-family: var(--font-serif);
+      color: var(--primary);
+      font-size: 32px;
+    }
+
+    .refresh-btn {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .refresh-btn:hover {
+      opacity: 0.9;
+    }
+
+    .table-responsive-wrapper {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(17, 60, 40, 0.04);
+      overflow-x: auto;
+    }
+
+    .data-dashboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .data-dashboard-table th {
+      background: var(--primary);
+      color: var(--white);
+      padding: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .data-dashboard-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(17, 60, 40, 0.06);
+      color: var(--dark-neutral);
+    }
+
+    .data-dashboard-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-dashboard-table tr:nth-child(even) {
+      background: var(--light-base);
+    }
+
+    .status-msg-box {
+      text-align: center;
+      padding: 48px;
+      color: rgba(10, 20, 16, 0.6);
+      font-size: 16px;
+    }
+
+    .status-msg-box i {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .refresh-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-lock-overlay" id="loginOverlay">
+    <div class="login-card-popup">
+      <div class="login-badge">
+        <i class="fas fa-shield-halved"></i>
+      </div>
+      <h2>HQ Control <span>Desk</span></h2>
+      <p>Authorized access validation challenge required.</p>
+      
+      <form class="login-form-fields" id="loginForm">
+        <div class="login-input-group">
+          <label for="username">Username / Name</label>
+          <div class="login-field-icon">
+            <i class="fas fa-user-tie"></i>
+            <input type="text" id="username" placeholder="Enter full team name" required autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="login-input-group">
+          <label for="password">Security Password</label>
+          <div class="login-field-icon">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" placeholder="••••••••" required />
+          </div>
+        </div>
+
+        <div class="error-alert-text" id="errorMsg">
+          <i class="fas fa-circle-exclamation"></i> Invalid Team Credentials
+        </div>
+
+        <button type="submit" class="login-submit-btn">Verify Gate Access</button>
+      </form>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-img-wrapper">
+          <img src="1Logo.png" alt="Explore Hub" onerror="this.style.display='none'"/>
+        </div>
+        <span>Explore Hub Operations</span>
+      </a>
+      <nav class="menu">
+        <a href="index.html" class="menu-link">Home</a>
+        <a href="booking.html" class="menu-link">Trip Planner Desk</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+    <div class="dashboard-header">
+      <div class="dashboard-title">
+        <h1>Live Booking <span>Queue</span></h1>
+        <p style="color: rgba(10, 20, 16, 0.6); margin-top: 4px;">Real-time synchronized records from Google Sheets</p>
+      </div>
+      <button class="refresh-btn" onclick="fetchSheetData()">
+        <i class="fas fa-rotate"></i> Refresh Data
+      </button>
+    </div>
+
+    <div class="table-responsive-wrapper">
+      <table class="data-dashboard-table" id="recordsTable">
+        <thead>
+          <tr>
+            <th>Date & Time</th>
+            <th>Full Name</th>
+            <th>Mobile Number</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Journey Date</th>
+            <th>Special Notes</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr>
+            <td colspan="7" class="status-msg-box">
+              <i class="fas fa-lock" style="color:var(--primary);"></i><br>Locked. Please verify access criteria above.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    // Point directly to your active deployment script URL macro link
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbwWC9fQyw1mzfLf95y1rQnF_2d0ZT-OqKJ2N0XC-CanpISN7xxQ1G3mLL5DocYmyHnK/exec';
+
+    // 🔒 TEAM ACCESS AUTHENTICATION MATRIX
+    const teamCredentials = {
+      "Ivan Mathew": "ivan@xplog",
+      "Deepu Joseph": "deepu@xplog",
+      "Sharon Raju": "sharon@xplog",
+      "Cyril Sajeev": "cyril@xplog"
+    };
+
+    // Manage Gate Challenge Logic
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const userField = document.getElementById('username').value.trim();
+      const passField = document.getElementById('password').value;
+      const errorDiv = document.getElementById('errorMsg');
+      const overlay = document.getElementById('loginOverlay');
+
+      // Validate input fields against our structured team dataset
+      if (teamCredentials[userField] && teamCredentials[userField] === passField) {
+        // Hide the barrier popup interface gracefully
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 400);
+        
+        // Execute the sheet download data fetch sequence automatically
+        fetchSheetData();
+      } else {
+        // Show invalid configuration flag alert text
+        errorDiv.style.display = 'block';
+        document.getElementById('password').value = ''; // wipe field text clear
+      }
+    });
+
+    function fetchSheetData() {
+      const tableBody = document.getElementById('tableBody');
+      const refreshBtn = document.querySelector('.refresh-btn');
+      
+      refreshBtn.disabled = true;
+      refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing...';
+      tableBody.innerHTML = '<tr><td colspan="7" class="status-msg-box"><i class="fas fa-spinner fa-spin"></i><br>Connecting to Google Cloud Pipeline...</td></tr>';
+
+      fetch(scriptUrl + '?action=read')
+        .then(response => response.json())
+        .then(data => {
+          tableBody.innerHTML = ''; 
+
+          if (data.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="7" class="status-msg-box"><i class="fas fa-folder-open"></i><br>No client bookings recorded yet.</td></tr>';
+          } else {
+            data.reverse().forEach(row => {
+              const tr = document.createElement('tr');
+              
+              const timestamp = row.timestamp ? new Date(row.timestamp).toLocaleString('en-IN') : 'N/A';
+              const journeyDate = row.startDate ? new Date(row.startDate).toLocaleDateString('en-IN') : 'N/A';
+
+              tr.innerHTML = `
+                <td><strong>${timestamp}</strong></td>
+                <td><span style="font-weight:600; color:var(--primary);">${row.fullName || 'N/A'}</span></td>
+                <td><a href="tel:${row.mobileNumber}" style="color:inherit; text-decoration:none;"><i class="fas fa-phone text-accent" style="font-size:12px; margin-right:4px;"></i> ${row.mobileNumber || 'N/A'}</a></td>
+                <td>${row.startPlace || 'N/A'}</td>
+                <td>${row.endPlace || 'N/A'}</td>
+                <td><span class="tag">${journeyDate}</span></td>
+                <td style="max-width:250px; white-space:normal;">${row.extraNotes || '<em style="color:#bbb;">None</em>'}</td>
+              `;
+              tableBody.appendChild(tr);
+            });
+          }
+          
+          refreshBtn.disabled = false;
+          refreshBtn.innerHTML = '<i class="fas fa-rotate"></i> Refresh Data';
+        })
+        .catch(error => {
+          tableBody.innerHTML = '<tr><td colspan="7" class="status-msg-box" style="color:#df4747;"><i class="fas fa-triangle-exclamation"></i><br>Failed to retrieve dataset rows. Make sure the script deployment is authorized.</td></tr>';
+          refreshBtn.disabled = false;
+          refreshBtn.innerHTML = '<i class="fas fa-rotate"></i> Refresh Data';
+        });
+    }
+  </script>
+</body>
+</html>

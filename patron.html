@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Guiding Patron | Explore Hub Tours</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+</head>
+<body>
+
+  <header class="header">
+    <div class="container nav-container">
+      <a href="index.html#home" class="logo">
+        <div class="logo-img-wrapper">
+          <img src="1Logo.png" alt="Explore Hub" onerror="this.style.display='none'"/>
+        </div>
+        <span>Explore Hub</span>
+      </a>
+
+            <nav class="menu">
+        <a href="index.html" class="menu-link">Home</a>
+        <a href="packages.html" class="menu-link ">Packages</a>
+        <a href="about.html" class="menu-link active">About Us</a>
+        <a href="destinations.html" class="menu-link">Destinations</a>
+        <a href="reviews.html" class="menu-link">Reviews</a>
+        <a href="#contact" class="menu-link">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="index.html#packages" class="btn btn-primary nav-btn">Book Now</a>
+        <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+          <i class="fas fa-bars-staggered"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero internal-hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content center-align-text">
+      <span class="hero-tagline">Divine Guidance & Protection</span>
+      <h1>Our Guiding <span>Patron</span></h1>
+    </div>
+  </section>
+
+  <section class="section light-bg">
+    <div class="container">
+      <div class="patron-layout-grid">
+        
+        <div class="patron-display-frame">
+          <div class="patron-circle-img-wrap">
+            <img src="patron.png" alt="St. Michael the Archangel" onerror="this.src='1Logo.png'" />
+          </div>
+        </div>
+
+        <div class="patron-narrative">
+          <span class="sub-title">St. Michael</span>
+          <h2 class="section-title">Inspiration Behind <br>Every Safe Journey</h2>
+          
+          <p class="lead-text">
+            We are deeply honored to have St. Michael as the patron of Explore Hub. Known as the archangel of protection, courage, and guidance, St. Michael inspires us to lead every journey with safety, responsibility, and dedication.
+          </p>
+          
+          <p>
+            His presence reminds us that every adventure should be approached with vigilance, preparation, and care for every traveler. St. Michael’s values align perfectly with the mission of Explore Hub — to provide well-planned, secure, and enjoyable travel experiences.
+          </p>
+          
+          <p>
+            From arranging transportation and accommodations to ensuring smooth coordination on trips, we strive to reflect the principles of guidance and protection that St. Michael represents. With St. Michael as our guiding patron, every trip is more than just a journey; it is an experience marked by trust, confidence, and memorable moments.
+          </p>
+
+          <p>
+            🙏 Under the patronage of St. Michael, Explore Hub aims to make every journey inspiring, safe, and unforgettable. Travelers can feel assured that Explore Hub is committed to their safety and enjoyment at every step.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="patron-values-deck">
+        <div class="value-pill">
+          <i class="fas fa-shield-halved"></i>
+          <h4>Ultimate Protection</h4>
+          <p>Inspires our uncompromising stance on traveler safety and secure routes.</p>
+        </div>
+        <div class="value-pill">
+          <i class="fas fa-compass"></i>
+          <h4>Clear Guidance</h4>
+          <p>Directing our end-to-end trip planning with structured coordinates.</p>
+        </div>
+        <div class="value-pill">
+          <i class="fas fa-handshake"></i>
+          <h4>Unshaken Trust</h4>
+          <p>Fostering complete transparency and peace of mind at every milestone.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h3>Explore Hub Tours</h3>
+        <p>Creating elevated, modern, and high-vibe journey experiences across prime global environments.</p>
+        <p class="copyright">&copy; 2026 Explore Hub Tours | All Rights Reserved.</p>
+      </div>
+      
+      <div class="footer-contacts">
+        <h4>Connect Directly</h4>
+        <a href="tel:+917034042703" class="footer-link"><i class="fas fa-phone-alt"></i> +91 7034042703</a>
+        <a href="tel:+919207509685" class="footer-link"><i class="fas fa-phone-alt"></i> +91 9207509685</a>
+        <a href="tel:+918547006694" class="footer-link"><i class="fas fa-phone-alt"></i> +91 8547006694</a>
+        <a href="tel:+918078082431" class="footer-link"><i class="fas fa-phone-alt"></i> +91 8078082431</a>
+        <a href="mailto:explorehub.tour@gmail.com" class="footer-link"><i class="far fa-envelope"></i> explorehub.tour@gmail.com</a>
+        <span class="footer-link"><i class="fas fa-map-marker-alt"></i> Kerala, India</span>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/917034042703" target="_blank" class="whatsapp-floating" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="whatsapp-tooltip">Chat With Us</span>
+  </a>
+
+  <script>
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const menu = document.querySelector('.menu');
+    
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+      const icon = menuToggle.querySelector('i');
+      if(menu.classList.contains('active')) {
+        icon.className = 'fas fa-xmark';
+      } else {
+        icon.className = 'fas fa-bars-staggered';
+      }
+    });
+  </script>
+</body>
+</html>
