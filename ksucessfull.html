@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submission Successful | Explore Hub Tours</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    .status-panel-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70vh;
+      padding: 40px 20px;
+    }
+
+    .status-card {
+      max-width: 550px;
+      width: 100%;
+      background: var(--white);
+      padding: 50px 40px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      border: 1px solid rgba(17, 60, 40, 0.04);
+    }
+
+    .status-icon-wrapper {
+      width: 80px;
+      height: 80px;
+      background: rgba(17, 60, 40, 0.05);
+      color: #2e7d32; /* Rich success green */
+      font-size: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin: 0 auto 24px auto;
+    }
+
+    .status-card h1 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .status-card h1 span {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .status-card p {
+      font-size: 16px;
+      color: rgba(10, 20, 16, 0.7);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .status-action-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .status-action-row .btn {
+      flex: 1;
+      justify-content: center;
+      padding: 14px 20px;
+      font-size: 14px;
+    }
+
+    .btn-secondary-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-secondary-outline:hover {
+      background: var(--light-base);
+    }
+
+    @media (max-width: 480px) {
+      .status-card {
+        padding: 40px 20px;
+      }
+      .status-action-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-img-wrapper">
+          <img src="1Logo.png" alt="Explore Hub" onerror="this.style.display='none'"/>
+        </div>
+        <span>Explore Hub</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="status-panel-container light-bg">
+    <div class="status-card">
+      <div class="status-icon-wrapper">
+        <i class="fas fa-circle-check"></i>
+      </div>
+      <h1>Request <span>Received!</span></h1>
+      <p>
+        Thank you for submitting your trip configuration details. Your request has been logged successfully into our operations sheet. Our travel coordinator team will contact you shortly to fine-tune your itinerary!
+      </p>
+      
+      <div class="status-action-row">
+        <a href="index.html" class="btn btn-secondary-outline"><i class="fas fa-house"></i> Back To Home</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" style="padding: 24px 0; text-align: center;">
+    <p class="copyright" style="margin: 0;">&copy; 2026 Explore Hub Tours | All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
