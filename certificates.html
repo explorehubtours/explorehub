@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Official Certificates & Accreditations | Explore Hub Tours</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    /* Protection & Non-downloadable Rules */
+    .no-select {
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    .cert-display-section {
+      padding: 60px 0 100px 0;
+      background: var(--light-base);
+      min-height: 80vh;
+    }
+
+    .cert-full-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .cert-item-frame {
+      position: relative;
+      background: #ffffff;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(17, 60, 40, 0.06);
+      cursor: zoom-in;
+      transition: var(--transition);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cert-item-frame:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent);
+    }
+
+    .cert-image-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #edece6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cert-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      transition: transform 0.4s ease;
+    }
+
+    .cert-item-frame:hover .cert-image-container img {
+      transform: scale(1.03);
+    }
+
+    /* Transparent Click Shield Overlays */
+    .click-shield {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      z-index: 5;
+    }
+
+    .tap-hint-badge {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(10, 20, 16, 0.78);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 6;
+      transition: var(--transition);
+    }
+
+    .cert-item-frame:hover .tap-hint-badge {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .cert-caption {
+      margin-top: 16px;
+      text-align: center;
+      padding: 0 4px;
+    }
+
+    .cert-caption h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+      font-family: var(--font-sans);
+    }
+
+    .cert-caption span {
+      font-size: 12px;
+      color: rgba(10, 20, 16, 0.55);
+      font-weight: 600;
+      display: block;
+    }
+
+    /* Modal Viewer */
+    .zoom-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 20, 16, 0.95);
+      backdrop-filter: blur(14px);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .zoom-modal.active {
+      display: flex;
+    }
+
+    .zoom-toolbar {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      display: flex;
+      gap: 12px;
+      z-index: 100;
+    }
+
+    .zoom-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+
+    .zoom-btn:hover {
+      background: var(--accent);
+      color: #ffffff;
+      transform: scale(1.08);
+    }
+
+    .modal-image-viewport {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .modal-image-viewport:active {
+      cursor: grabbing;
+    }
+
+    .modal-image-viewport img {
+      max-width: 88vw;
+      max-height: 85vh;
+      object-fit: contain;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+      transform-origin: center center;
+      transition: transform 0.1s ease-out;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .zoom-toolbar {
+        top: 16px;
+        right: 16px;
+        gap: 8px;
+      }
+      .zoom-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 14px;
+      }
+      .modal-image-viewport img {
+        max-width: 95vw;
+        max-height: 80vh;
+      }
+    }
+  </style>
+</head>
+<body class="no-select" oncontextmenu="return false;">
+
+  <header class="header">
+    <div class="container nav-container">
+      <a href="index.html#home" class="logo">
+        <div class="logo-img-wrapper">
+          <img src="1Logo.png" alt="Explore Hub" onerror="this.style.display='none'"/>
+        </div>
+        <span>Explore Hub</span>
+      </a>
+
+      <nav class="menu">
+        <a href="index.html" class="menu-link">Home</a>
+        <a href="packages.html" class="menu-link">Packages</a>
+        <a href="about.html" class="menu-link active">About Us</a>
+        <a href="destinations.html" class="menu-link">Destinations</a>
+        <a href="reviews.html" class="menu-link">Reviews</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="about.html" class="btn btn-primary small-btn"><i class="fas fa-arrow-left"></i> Back to About</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="cert-display-section">
+    <div class="container">
+      <div class="section-header center-align">
+        <span class="sub-title">Official Recognition</span>
+        <h2 class="section-title">Accreditations & Certificates</h2>
+        <p class="cert-intro-text">
+          Explore Hub operates under government-verified frameworks, ethical pledge commitments, and enterprise certifications. Tap any certificate below to view in full resolution and zoom.
+        </p>
+      </div>
+
+      <div class="cert-full-grid">
+
+        <!-- 1. NIDHI -->
+        <div class="cert-item-frame" data-src="cert-nidhi.jpg">
+          <div class="cert-image-container">
+            <img src="cert-nidhi.jpg" alt="Ministry of Tourism NIDHI Pledge Certificate" />
+            <div class="click-shield"></div>
+            <div class="tap-hint-badge"><i class="fas fa-magnifying-glass-plus"></i> Tap to Zoom</div>
+          </div>
+          <div class="cert-caption">
+            <h3>Ministry of Tourism — NIDHI Pledge</h3>
+            <span>Registration ID:EKL000717</span>
+          </div>
+        </div>
+
+        <!-- 2. UDYAM Page 1 -->
+        <div class="cert-item-frame" data-src="cert-udyam-p1.jpg">
+          <div class="cert-image-container">
+            <img src="cert-udyam-p1.jpg" alt="MSME Udyam Registration Certificate Page 1" />
+            <div class="click-shield"></div>
+            <div class="tap-hint-badge"><i class="fas fa-magnifying-glass-plus"></i> Tap to Zoom</div>
+          </div>
+          <div class="cert-caption">
+            <h3>Udyam MSME Certificate (Page 1)</h3>
+            <span>UDYAM-KL-07-0064264 • Enterprise Registration</span>
+          </div>
+        </div>
+
+        <!-- 3. UDYAM Page 2 -->
+        <div class="cert-item-frame" data-src="cert-udyam-p2.jpg">
+          <div class="cert-image-container">
+            <img src="cert-udyam-p2.jpg" alt="MSME Udyam Registration Certificate Page 2" />
+            <div class="click-shield"></div>
+            <div class="tap-hint-badge"><i class="fas fa-magnifying-glass-plus"></i> Tap to Zoom</div>
+          </div>
+          <div class="cert-caption">
+            <h3>Udyam Verification (Page 2)</h3>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- 4. Travel for LiFE -->
+        <div class="cert-item-frame" data-src="cert-travel-life.jpg">
+          <div class="cert-image-container">
+            <img src="cert-travel-life.jpg" alt="Incredible India Travel for LiFE Pledge Certificate" />
+            <div class="click-shield"></div>
+            <div class="tap-hint-badge"><i class="fas fa-magnifying-glass-plus"></i> Tap to Zoom</div>
+          </div>
+          <div class="cert-caption">
+            <h3>Travel for LiFE Pledge</h3>
+            <span>Ministry of Tourism • Incredible India</span>
+          </div>
+        </div>
+
+        <!-- 5. Integrity Pledge -->
+        <div class="cert-item-frame" data-src="cert-integrity.jpg">
+          <div class="cert-image-container">
+            <img src="cert-integrity.jpg" alt="Central Vigilance Commission Integrity Pledge" />
+            <div class="click-shield"></div>
+            <div class="tap-hint-badge"><i class="fas fa-magnifying-glass-plus"></i> Tap to Zoom</div>
+          </div>
+          <div class="cert-caption">
+            <h3>Integrity Pledge</h3>
+            <span>Central Vigilance Commission • Ethics Compliance</span>
+          </div>
+        </div>
+
+        <!-- 6. Cyber Security Awareness -->
+        <div class="cert-item-frame" data-src="cert-cyber.jpg">
+          <div class="cert-image-container">
+            <img src="cert-cyber.jpg" alt="Cyber Security Awareness Month Pledge" />
+            <div class="click-shield"></div>
+            <div class="tap-hint-badge"><i class="fas fa-magnifying-glass-plus"></i> Tap to Zoom</div>
+          </div>
+          <div class="cert-caption">
+            <h3>Cyber Security Awareness Pledge</h3>
+            <span>DSCI & MyGov • Data Protection</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive High-Res Zoom Modal -->
+  <div class="zoom-modal" id="zoomModal">
+    <div class="zoom-toolbar">
+      <button class="zoom-btn" id="btnZoomIn" title="Zoom In"><i class="fas fa-plus"></i></button>
+      <button class="zoom-btn" id="btnZoomOut" title="Zoom Out"><i class="fas fa-minus"></i></button>
+      <button class="zoom-btn" id="btnZoomReset" title="Reset Zoom"><i class="fas fa-rotate-left"></i></button>
+      <button class="zoom-btn" id="btnCloseModal" title="Close"><i class="fas fa-xmark"></i></button>
+    </div>
+
+    <div class="modal-image-viewport" id="viewport">
+      <img src="" alt="Certificate" id="zoomImage" draggable="false" />
+    </div>
+  </div>
+
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h3>Explore Hub Tours</h3>
+        <p>Creating elevated, modern, and high-vibe journey experiences across prime global environments.</p>
+        <p class="copyright">&copy; 2026 Explore Hub Tours | All Rights Reserved.</p>
+      </div>
+      
+      <div class="footer-contacts">
+        <h4>Connect Directly</h4>
+        <a href="tel:+917034042703" class="footer-link"><i class="fas fa-phone-alt"></i> +91 7034042703</a>
+        <a href="tel:+919207509685" class="footer-link"><i class="fas fa-phone-alt"></i> +91 9207509685</a>
+        <a href="tel:+918547006694" class="footer-link"><i class="fas fa-phone-alt"></i> +91 8547006694</a>
+        <a href="tel:+918078082431" class="footer-link"><i class="fas fa-phone-alt"></i> +91 8078082431</a>
+        <a href="mailto:explorehub.tour@gmail.com" class="footer-link"><i class="far fa-envelope"></i> explorehub.tour@gmail.com</a>
+        <span class="footer-link"><i class="fas fa-map-marker-alt"></i> Kerala, India</span>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/917034042703" target="_blank" class="whatsapp-floating" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="whatsapp-tooltip">Chat With Us</span>
+  </a>
+4>
+
+  <script>
+    // 1. Protection Engine: Block Context Menu, Dragging, & Saving Shortcuts
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    document.addEventListener('dragstart', (e) => e.preventDefault());
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && ['s', 'u', 'p'].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+      }
+    });
+
+    // 2. High-Res Zoom, Pan & Touch Mechanics
+    const modal = document.getElementById('zoomModal');
+    const zoomImg = document.getElementById('zoomImage');
+    const viewport = document.getElementById('viewport');
+    const btnIn = document.getElementById('btnZoomIn');
+    const btnOut = document.getElementById('btnZoomOut');
+    const btnReset = document.getElementById('btnZoomReset');
+    const btnClose = document.getElementById('btnCloseModal');
+
+    let currentScale = 1;
+    let posX = 0, posY = 0;
+    let isDragging = false;
+    let startX = 0, startY = 0;
+
+    function applyTransform() {
+      zoomImg.style.transform = `translate(${posX}px, ${posY}px) scale(${currentScale})`;
+    }
+
+    function openModal(src) {
+      zoomImg.src = src;
+      currentScale = 1;
+      posX = 0;
+      posY = 0;
+      applyTransform();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      zoomImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.cert-item-frame').forEach(frame => {
+      frame.addEventListener('click', () => {
+        const src = frame.getAttribute('data-src');
+        if (src) openModal(src);
+      });
+    });
+
+    btnClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === viewport) closeModal();
+    });
+
+    // Zoom Controls
+    btnIn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentScale < 4.0) {
+        currentScale += 0.35;
+        applyTransform();
+      }
+    });
+
+    btnOut.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentScale > 0.8) {
+        currentScale = Math.max(0.8, currentScale - 0.35);
+        applyTransform();
+      }
+    });
+
+    btnReset.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentScale = 1;
+      posX = 0;
+      posY = 0;
+      applyTransform();
+    });
+
+    // Mouse Wheel Zoom
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (e.deltaY < 0 && currentScale < 4.0) {
+        currentScale += 0.2;
+      } else if (e.deltaY > 0 && currentScale > 0.8) {
+        currentScale = Math.max(0.8, currentScale - 0.2);
+      }
+      applyTransform();
+    }, { passive: false });
+
+    // Drag to Pan
+    viewport.addEventListener('mousedown', (e) => {
+      if (currentScale > 1) {
+        isDragging = true;
+        startX = e.clientX - posX;
+        startY = e.clientY - posY;
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        posX = e.clientX - startX;
+        posY = e.clientY - startY;
+        applyTransform();
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // Mobile Touch Drag & Pinch Zoom
+    let initialTouchDistance = 0;
+    viewport.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1 && currentScale > 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX - posX;
+        startY = e.touches[0].clientY - posY;
+      } else if (e.touches.length === 2) {
+        initialTouchDistance = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+      }
+    });
+
+    viewport.addEventListener('touchmove', (e) => {
+      if (isDragging && e.touches.length === 1) {
+        posX = e.touches[0].clientX - startX;
+        posY = e.touches[0].clientY - startY;
+        applyTransform();
+      } else if (e.touches.length === 2) {
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        const factor = dist / initialTouchDistance;
+        currentScale = Math.min(Math.max(0.8, currentScale * (factor > 1 ? 1.03 : 0.97)), 4.0);
+        applyTransform();
+      }
+    }, { passive: true });
+
+    viewport.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+  </script>
+</body>
+</html>
