@@ -1,39 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- High-Intent FAQ Schema for Local Search & AI Answers -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How can I book customized tour packages from Kottayam and Pala?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Explore Hub provides customized domestic tour packages starting from Ramapuram, Pala, and Kottayam. You can book directly online through explorehubtours.vercel.app or via WhatsApp at +91 7034042703."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does Explore Hub arrange buses and tempo travellers for group tours?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, Explore Hub arranges modern transit vehicles including luxury buses, tempo travellers, and verified hotel stays for family trips, college tours, and pilgrimages across South India."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Which tour destinations are covered by Explore Hub?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Explore Hub covers top South India destinations including Munnar, Vagamon, Wayanad, Kanyakumari, Velankanni, and Mysore with custom pickup points across Central Kerala."
-      }
-    }
-  ]
-}
-</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q576FLW8PV"></script>
   <script>
@@ -58,6 +25,13 @@
   <!-- Canonical Link -->
   <link rel="canonical" href="https://explorehubtours.vercel.app/" />
 
+  <!-- Google Search Site Name & Favicons -->
+  <meta property="og:site_name" content="Explore Hub" />
+  <link rel="icon" type="image/png" sizes="192x192" href="https://explorehubtours.vercel.app/1Logo.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="https://explorehubtours.vercel.app/1Logo.png" />
+  <link rel="apple-touch-icon" href="https://explorehubtours.vercel.app/1Logo.png" />
+  <link rel="shortcut icon" href="https://explorehubtours.vercel.app/1Logo.png" />
+
   <!-- Open Graph / Facebook / WhatsApp Preview -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://explorehubtours.vercel.app/" />
@@ -72,7 +46,52 @@
   <meta property="twitter:description" content="Customized tour packages, tempo traveller rentals, and verified hotel stays with Explore Hub." />
   <meta property="twitter:image" content="https://explorehubtours.vercel.app/1Logo.png" />
 
-  <!-- Structured Data (JSON-LD) for Search Engines & AI Models -->
+  <!-- Official Google WebSite Structured Data (Fixes "Vercel" Title Display) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Explore Hub",
+    "alternateName": ["Explore Hub Tours", "Explore Hub Kerala"],
+    "url": "https://explorehubtours.vercel.app/"
+  }
+  </script>
+
+  <!-- High-Intent FAQ Schema for Local Search & AI Answers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How can I book customized tour packages from Kottayam and Pala?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Explore Hub provides customized domestic tour packages starting from Ramapuram, Pala, and Kottayam. You can book directly online through explorehubtours.vercel.app or via WhatsApp at +91 7034042703."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Explore Hub arrange buses and tempo travellers for group tours?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, Explore Hub arranges modern transit vehicles including luxury buses, tempo travellers, and verified hotel stays for family trips, college tours, and pilgrimages across South India."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which tour destinations are covered by Explore Hub?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Explore Hub covers top South India destinations including Munnar, Vagamon, Wayanad, Kanyakumari, Velankanni, and Mysore with custom pickup points across Central Kerala."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data (JSON-LD) for Local Agency & Business Profile Graph -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -130,11 +149,10 @@
   }
   </script>
 
-  <link rel="icon" type="image/png" href="1Logo.png">
+  <!-- Fonts & Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
@@ -142,7 +160,6 @@
 
   <header class="header">
     <div class="container nav-container">
-
       <a href="index.html" class="logo">
         <div class="logo-img-wrapper">
           <img src="1Logo.png" alt="Explore Hub Logo" onerror="this.style.display='none'"/>
